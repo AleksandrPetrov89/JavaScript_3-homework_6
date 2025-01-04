@@ -1,5 +1,5 @@
 import "./css/style.css";
 
-import "./js/app";
+import taskManagementSystem from "./js/app";
 
-// TODO: write your code in app.js
+document.addEventListener("DOMContentLoaded", taskManagementSystem);
