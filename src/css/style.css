@@ -7,6 +7,7 @@ body {
   display: flex;
   padding-left: 0.5%;
   padding-right: 0.5%;
+  align-items: flex-start;
 }
 
 .column {
@@ -86,8 +87,10 @@ body {
 }
 
 form.form-adding-card {
-  position:relative;
-  bottom: -1.1rem;
+  position: absolute;
+  bottom: 0px;
+  width: 96%;
+  margin-left: 2%;
 }
 
 .card {
@@ -95,11 +98,47 @@ form.form-adding-card {
   background-color: field;
   color: fieldtext;
   margin: auto;
+  position: relative;
+  cursor: grab;
+}
+
+.card.dragged {
+  position: absolute;
+  z-index: 999;
+  cursor: grabbing;
 }
 
 .card>p {
-  padding-left: 0.5em;
-  padding-right: 0.3em;
+  padding: 0.3em 0.3em 0.3em 0.5em;
   overflow-wrap: break-word;
   margin: 0.4rem;
+  pointer-events: none;
+}
+
+.cards-field.form-open {
+  margin-bottom: 4.5rem;
+}
+
+.card-close-btn {
+  background-color: inherit;
+  color: rgb(158, 157, 157);
+  border: none;
+  position: absolute;
+  top: 0.1rem;
+  right: 0.1rem;
+  font-size: 0.5rem;
+  padding:  0.05rem 0.2rem 0.1rem 0.2rem;
+}
+
+.card-close-btn:hover {
+  background-color: rgb(216, 214, 214);
+  color: gray;
+}
+
+.old-position {
+  display: none;
+}
+
+.possible-place{
+  visibility: hidden;
 }

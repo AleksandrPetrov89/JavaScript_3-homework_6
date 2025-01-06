@@ -1,13 +1,20 @@
+import MoveCard from "./classes/move_card";
+
 export default function taskManagementSystem() {
   const board = document.querySelector(".board");
   board.addEventListener("click", openForm);
+  const moveCard = new MoveCard(board);
+  moveCard.start();
 }
 
+// Открывает форму для создания новой карточки и удаляет карточки
 function openForm(e) {
   if (e.target.classList.contains("column-add-btn")) {
     const btn = e.target;
     btn.classList.add("closed");
     const column = e.target.closest(".column");
+    const cardsField = column.querySelector(".cards-field");
+    cardsField.classList.add("form-open");
     const form = document.createElement("form");
     form.classList.add("form-adding-card");
     form.innerHTML = `
@@ -21,30 +28,40 @@ function openForm(e) {
 
     const closeBtn = form.querySelector(".close-button");
 
-    const addThisCard = addCard.bind(this, form, column, closeBtn);
+    const addThisCard = addCard.bind(this, form, closeBtn, cardsField);
     form.addEventListener("submit", addThisCard);
 
-    this.closeThisForm = closeForm.bind(this, form, closeBtn, btn, addThisCard);
+    this.closeThisForm = closeForm.bind(
+      this,
+      form,
+      closeBtn,
+      btn,
+      addThisCard,
+      cardsField,
+    );
     closeBtn.addEventListener("click", this.closeThisForm);
+  }
+  if (e.target.classList.contains("card-close-btn")) {
+    e.target.closest(".card").remove();
   }
 }
 
-function closeForm(form, closeBtn, btn, addThisCard) {
+// Закрывает форму создания карточки
+function closeForm(form, closeBtn, btn, addThisCard, cardsField) {
   closeBtn.removeEventListener("click", this.closeThisForm);
   form.removeEventListener("submit", addThisCard);
   form.remove();
-  console.log("closeBtn");
+  cardsField.classList.remove("form-open");
   btn.classList.remove("closed");
 }
 
-function addCard(form, column, closeBtn, e) {
-  console.log("submit");
+// Создает новую карточку
+function addCard(form, closeBtn, cardsField, e) {
   e.preventDefault();
   const text = form.querySelector("textarea");
-  const cardsField = column.querySelector(".cards-field");
   const card = document.createElement("div");
   card.classList.add("card");
-  card.innerHTML = `<p></p>`;
+  card.innerHTML = `<p class="card-text"></p><button type="button" class="card-close-btn">&#x2716</button>`;
   cardsField.append(card);
   card.querySelector("p").textContent = text.value;
   text.value = "";
