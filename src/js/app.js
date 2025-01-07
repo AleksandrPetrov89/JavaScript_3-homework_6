@@ -1,8 +1,10 @@
 import MoveCard from "./classes/move_card";
+import { savingCards } from "./classes/saving_loading_cards";
 
 export default function taskManagementSystem() {
   const board = document.querySelector(".board");
   board.addEventListener("click", openForm);
+
   const moveCard = new MoveCard(board);
   moveCard.start();
 }
@@ -66,4 +68,6 @@ function addCard(form, closeBtn, cardsField, e) {
   card.querySelector("p").textContent = text.value;
   text.value = "";
   closeBtn.click();
+
+  savingCards();
 }
