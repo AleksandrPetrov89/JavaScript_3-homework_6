@@ -1,3 +1,5 @@
+import { savingCards } from "./saving_loading_cards";
+
 // Класс, который управляет перемещением карточек
 export default class MoveCard {
   constructor(board) {
@@ -62,6 +64,7 @@ export default class MoveCard {
 
   // Метод, отвечающий за окончательное местоположение карточки,
   // удаление обработчиков событий и вспомогательных html-узлов
+  // и сохранение состояния в localStorage
   #mouseUp(e) {
     this.#underElem(e);
     this.#preInsertion();
@@ -77,6 +80,9 @@ export default class MoveCard {
 
     document.removeEventListener("mouseup", this.mouseUp);
     document.removeEventListener("mousemove", this.mouseMove);
+
+    // Сохраняет состояние в localStorage
+    savingCards();
   }
 
   // Метод, определяющий над каким узлом сейчас курсор мыши (над карточкой, колонкой или вне доски)

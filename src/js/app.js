@@ -1,7 +1,9 @@
 import MoveCard from "./classes/move_card";
-import { savingCards } from "./classes/saving_loading_cards";
+import { savingCards, loadingCards } from "./classes/saving_loading_cards";
 
 export default function taskManagementSystem() {
+  loadingCards();
+
   const board = document.querySelector(".board");
   board.addEventListener("click", openForm);
 
@@ -43,8 +45,10 @@ function openForm(e) {
     );
     closeBtn.addEventListener("click", this.closeThisForm);
   }
+  //Удаляет карточку и сохраняет состояние в localStorage
   if (e.target.classList.contains("card-close-btn")) {
     e.target.closest(".card").remove();
+    savingCards();
   }
 }
 
@@ -69,5 +73,6 @@ function addCard(form, closeBtn, cardsField, e) {
   text.value = "";
   closeBtn.click();
 
+  // Сохраняет состояние в localStorage
   savingCards();
 }
